@@ -1,0 +1,37 @@
+
+
+# Create your views here.
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout
+from .forms import StudentCreationForm, StudentAuthenticationForm
+
+def register(request):
+    if request.method == "POST":
+        form = StudentCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return render(request, "index.html", {"user": user})
+    else:
+        form = StudentCreationForm()
+
+    return render(request, "register.html", {"form": form})
+
+
+def user_login(request):
+    if request.method == "POST":
+        form = StudentAuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return render(request, "index.html", {"user": user})
+    else:
+        form = StudentAuthenticationForm()
+
+    return render(request, "login.html", {"form": form})
+
+
+def logoutme(request):
+    logout(request)
+    return redirect("/")

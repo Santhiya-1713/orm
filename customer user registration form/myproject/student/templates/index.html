@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Welcome {{ user.username }}</h2>
+
+<p><b>Course:</b> {{ user.course }}</p>
+
+<p><b>Date of Birth:</b> {{ user.date_of_birth }}</p>
+
+{% if user.profile_image %}
+<img src="{{ user.profile_image.url }}"
+     width="150"
+     height="150">
+{% endif %}
+
+<br><br>
+
+<a href="{% url 'logout' %}">Logout</a>
+
+{% endblock %}
